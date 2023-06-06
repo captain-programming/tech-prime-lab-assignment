@@ -1,0 +1,14 @@
+.dashboard{
+  height: 100vh;
+}
+
+.dashboard .dashboard-main {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  /* height: 180px; */
+  background-image: url(../../assets/Header-bg.svg);
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  background-color: #F2F4F7;
+}

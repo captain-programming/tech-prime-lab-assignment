@@ -1,0 +1,12 @@
+.dashboard .dashboard-main .search-icon{
+  
+}
+
+.dashboard .dashboard-main .search-input{
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-color: black;
+  border-radius: 0;
+  width: 300px;
+}
