@@ -6,7 +6,7 @@ import axios from "axios";
 import { toast } from 'react-toastify';
 
 const CreateProject = () => {
-  const [createProject, setCreateProject] = useState();
+  const [createProject, setCreateProject] = useState({category: "Quality A", department: "Strategy", division: "Compressor", location: "Pune", priority: "High", reason: "Business", type: "Internal"});
 
   const handleOnchange = (e) => {
     const {name, value} = e.target;
@@ -15,7 +15,7 @@ const CreateProject = () => {
 
   const registerProject = async(data) => {
     try{
-      let res = await axios.post("http://localhost:8080/project/create", data);
+      let res = await axios.post(`http://localhost:8080/project/create`, data);
       toast.success(res?.data?.message || 'New project added successfully', {
         position: toast.POSITION.BOTTOM_CENTER,
         autoClose: 3000,
@@ -26,6 +26,44 @@ const CreateProject = () => {
         autoClose: 3000,
       });
     }
+  }
+
+  const minDateFun=()=>{
+    let today = new Date();
+    let dd = today.getDate();
+    let mm = today.getMonth() + 1;
+    let yyyy = today.getFullYear();
+
+    if (dd < 10) {
+      dd = '0' + dd;
+    }
+    if (mm < 10) {
+      mm = '0' + mm;
+    }
+    return yyyy + '-' + mm + '-' + dd;
+  }
+
+  const minDateEnd=(startDate)=>{
+    let nextDate = new Date(startDate);
+    nextDate.setDate(nextDate.getDate() + 1);
+
+    let dd = nextDate.getDate();
+    let mm = nextDate.getMonth() + 1;
+    let yyyy = nextDate.getFullYear();
+
+    let nextDay = dd;
+    let nextMonth = mm;
+    let nextYear = yyyy;
+
+    if (dd < 10) {
+      nextDay = '0' + dd;
+    }
+
+    if (mm < 10) {
+      nextMonth = '0' + mm;
+    }
+
+    return `${nextYear}-${nextMonth}-${nextDay}`;
   }
 
   const handleSunmit = (e) => {
@@ -56,7 +94,7 @@ const CreateProject = () => {
             <div className='form-option p-4'>
               <div>
                 <p style={{ margin: 0, padding: 0, fontSize: "18px"}}>Reason:</p> 
-                  <select style={{borderRadius: "10px", padding: "16px", width: "100%"}} onChange={handleOnchange} name='reason' required>
+                  <select style={{borderRadius: "10px", padding: "16px", width: "100%"}} onChange={handleOnchange} name='reason' required defaultValue={'Business'}>
                     <option value="Business">Business</option>
                     <option value="DealerShip">DealerShip</option>
                     <option value="Transport">Transport</option>
@@ -64,7 +102,7 @@ const CreateProject = () => {
               </div>
               <div>
                 <p style={{ margin: 0, padding: 0, fontSize: "18px"}}>Type:</p> 
-                  <select style={{borderRadius: "10px", padding: "16px", width: "100%"}} onChange={handleOnchange} name='type' required>
+                  <select style={{borderRadius: "10px", padding: "16px", width: "100%"}} onChange={handleOnchange} name='type' required defaultValue={'Internal'}>
                     <option value="Internal">Internal</option>
                     <option value="External">External</option>
                     <option value="Vendor">Vendor</option>
@@ -72,7 +110,7 @@ const CreateProject = () => {
               </div>
               <div>
                 <p style={{ margin: 0, padding: 0, fontSize: "18px"}}>Division:</p> 
-                  <select style={{borderRadius: "10px", padding: "16px", width: "100%"}} onChange={handleOnchange} name='division' required>
+                  <select style={{borderRadius: "10px", padding: "16px", width: "100%"}} onChange={handleOnchange} name='division' required defaultValue={'Compressor'}>
                     <option value="Compressor">Compressor</option>
                     <option value="Filters">Filters</option>
                     <option value="Pumps">Pumps</option>
@@ -82,7 +120,7 @@ const CreateProject = () => {
               </div>
               <div>
                 <p style={{ margin: 0, padding: 0, fontSize: "18px"}}>Category:</p> 
-                  <select style={{borderRadius: "10px", padding: "16px", width: "100%"}} onChange={handleOnchange} name='category' required>
+                  <select style={{borderRadius: "10px", padding: "16px", width: "100%"}} onChange={handleOnchange} name='category' required defaultValue={'Quality A'}>
                     <option value="Quality A">Quality A</option>
                     <option value="Quality B">Quality B</option>
                     <option value="Quality C">Quality C</option>
@@ -91,7 +129,7 @@ const CreateProject = () => {
               </div>
               <div>
                 <p style={{ margin: 0, padding: 0, fontSize: "18px"}}>Priority:</p> 
-                  <select style={{borderRadius: "10px", padding: "16px", width: "100%"}} onChange={handleOnchange} name='priority' required>
+                  <select style={{borderRadius: "10px", padding: "16px", width: "100%"}} onChange={handleOnchange} name='priority' required defaultValue={'High'}>
                     <option value="High">High</option>
                     <option value="Low">Low</option>
                     <option value="Medium">Medium</option>
@@ -99,7 +137,7 @@ const CreateProject = () => {
               </div>
               <div>
                 <p style={{ margin: 0, padding: 0, fontSize: "18px"}}>Department:</p> 
-                  <select style={{borderRadius: "10px", padding: "16px", width: "100%"}} onChange={handleOnchange} name='department' required>
+                  <select style={{borderRadius: "10px", padding: "16px", width: "100%"}} onChange={handleOnchange} name='department' required defaultValue={'Strategy'}>
                     <option value="Strategy">Strategy</option>
                     <option value="Finance">Finance</option>
                     <option value="Quality">Quality</option>
@@ -109,15 +147,15 @@ const CreateProject = () => {
               </div>
               <div>
                 <p style={{ margin: 0, padding: 0, fontSize: "18px"}}>Start Dates as per Project Plan:</p> 
-                <input type='date' placeholder='D Month, Yr' style={{borderRadius: "10px", padding: "16px", width: "100%"}} onChange={handleOnchange} name='startDate' required/>
+                <input type='date' placeholder='D Month, Yr' style={{borderRadius: "10px", padding: "16px", width: "100%"}} onChange={handleOnchange} name='startDate' required min={minDateFun()}/>
               </div>
               <div>
                 <p style={{ margin: 0, padding: 0, fontSize: "18px"}}>End Dates as per Project Plan:</p> 
-                <input type='date' placeholder='D Month, Yr' style={{borderRadius: "10px", padding: "16px", width: "100%"}} onChange={handleOnchange} name='endDate' required/>
+                <input type='date' placeholder='D Month, Yr' style={{borderRadius: "10px", padding: "16px", width: "100%"}} onChange={handleOnchange} name='endDate' required min={minDateEnd(createProject.startDate)}/>
               </div>
               <div>
                 <p style={{ margin: 0, padding: 0, fontSize: "18px"}}>Location:</p> 
-                  <select style={{borderRadius: "10px", padding: "16px", width: "100%"}} onChange={handleOnchange} name='location' required>
+                  <select style={{borderRadius: "10px", padding: "16px", width: "100%"}} onChange={handleOnchange} name='location' required defaultValue={'Pune'}>
                     <option value="Pune">Pune</option>
                     <option value="Delhi">Delhi</option>
                     <option value="Mumbai">Mumbai</option>

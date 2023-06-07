@@ -13,17 +13,72 @@ const projectCreate = async(req, res) => {
   }
 }
 
-const allProject = async(req, res) => {
+const projectUpdate = async (req, res) => {
+  const { status } = req.body;
+  const { id } = req.params;
 
-  try{
-    const project = await ProjectModel.find({});
+  try {
+    const updatedProject = await ProjectModel.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true }
+    );
 
-    res.json(project);
-
-  }catch(err){
+    if (updatedProject) {
+      res.json({
+        message: `Project successfully ${status}`,
+        success: true,
+      });
+    } else {
+      res.status(404).json({ message: 'Project not found' });
+    }
+  } catch (err) {
+    console.log(err)
     res.status(500).json({ message: 'Internal Server Error' });
   }
-}
+};
+
+
+const allProject = async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const sort = req.query.sort || 'createdAt';
+    const searchTerm = req.query.searchTerm || '';
+    const query = {};
+
+    if (searchTerm) {
+      query.$or = [
+        { projectTitle: { $regex: searchTerm, $options: 'i' } },
+        { category: { $regex: searchTerm, $options: 'i' } },
+        { division: { $regex: searchTerm, $options: 'i' } },
+        { location: { $regex: searchTerm, $options: 'i' } },
+        { department: { $regex: searchTerm, $options: 'i' } },
+        { priority: { $regex: searchTerm, $options: 'i' } },
+        { reason: { $regex: searchTerm, $options: 'i' } },
+        { type: { $regex: searchTerm, $options: 'i' } },
+      ];
+    }
+
+    const totalCount = await ProjectModel.countDocuments(query);
+    const totalPages = Math.ceil(totalCount / limit);
+
+    const projects = await ProjectModel.find(query)
+      .sort({ [sort]: 1 })
+      .skip((page - 1) * limit)
+      .limit(limit);
+
+    res.json({
+      projects,
+      totalPages,
+      totalCount,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
 
 const getCount = async (req, res) => {
   try {
@@ -83,4 +138,4 @@ const getCount = async (req, res) => {
 }
 
 
-module.exports = {projectCreate, allProject, getCount};
+module.exports = {projectCreate, allProject, getCount, projectUpdate};
