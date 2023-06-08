@@ -15,7 +15,7 @@ const Pagination = ({ total = 0, active = 0, setPage }) => {
         <AiOutlineLeft fontSize={"20px"}/>
       </button>
       {pageNumbers.map(page => (
-        <button key={page} style={{ margin: 0, fontSize: "18px", border: "none", borderRadius: "50%", padding: "8px 16px", backgroundColor: active===page ? "rgb(207,226,255)" : ""}} disabled={active===page}>
+        <button key={page} style={{ margin: 0, fontSize: "18px", border: "none", borderRadius: "50%", padding: "8px 16px", backgroundColor: active===page ? "rgb(207,226,255)" : ""}} disabled={active===page} onClick={() => setPage(page)}>
           {page}
         </button>
       ))}

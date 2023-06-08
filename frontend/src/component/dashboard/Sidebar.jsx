@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import createProjectActive from "../../assets/create-project-active.svg";
 import createProject from "../../assets/create-project.svg";
 import dashboardActive from "../../assets/Dashboard-active.svg";
@@ -8,9 +8,11 @@ import projectList from "../../assets/Project-list.svg";
 import projectListActive from "../../assets/Project-list-active.svg";
 import { NavLink, useLocation } from 'react-router-dom';
 import "../dashboard/sidebar.css";
+import { AuthContext } from '../AuthContext';
 
 const Sidebar = () => {
   const {pathname} = useLocation();
+  const {handleLogout} = useContext(AuthContext);
 
   return (
     <div className="shadow-lg sidebar d-flex flex-column justify-content-between pt-5 pb-5">
@@ -48,7 +50,7 @@ const Sidebar = () => {
           </div>
         </div>
         <div className="d-flex flex-column align-items-center justify-content-end">
-          <img src={logout} alt='Logout' style={{cursor: "pointer"}}/>
+          <img src={logout} alt='Logout' style={{cursor: "pointer"}} onClick={handleLogout}/>
         </div>
       </div>
   )

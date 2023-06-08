@@ -15,7 +15,7 @@ const CreateProject = () => {
 
   const registerProject = async(data) => {
     try{
-      let res = await axios.post(`http://localhost:8080/project/create`, data);
+      let res = await axios.post(`https://tech-prime-lab-9ov4.onrender.com/project/create`, data);
       toast.success(res?.data?.message || 'New project added successfully', {
         position: toast.POSITION.BOTTOM_CENTER,
         autoClose: 3000,

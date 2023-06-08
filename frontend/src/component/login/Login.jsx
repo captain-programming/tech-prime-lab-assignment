@@ -21,7 +21,7 @@ const Login = () => {
 
   const checkLogin = async(data) => {
     try{
-      let res = await axios.post(`http://localhost:8080/user/login`, data);
+      let res = await axios.post(`https://tech-prime-lab-9ov4.onrender.com/user/login`, data);
       toast.success(res?.data?.message || 'Valid User', {
         position: toast.POSITION.BOTTOM_CENTER,
         autoClose: 3000,

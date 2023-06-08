@@ -10,7 +10,7 @@ const Dashboard = () => {
 
   const getCount = async() => {
     try{
-      let res = await axios.post(`http://localhost:8080/project/counter`);
+      let res = await axios.post(`https://tech-prime-lab-9ov4.onrender.com/project/counter`);
       setCounterData(res.data);
     }catch(err){
       console.log(err)
