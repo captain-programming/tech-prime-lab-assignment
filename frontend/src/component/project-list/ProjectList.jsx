@@ -5,6 +5,7 @@ import "./projectList.css"
 import ProjectTable from './ProjectTable';
 import Pagination from './Pagination';
 import axios from 'axios';
+import PageHeading from '../helping/PageHeading';
 
 const ProjectList = () => {
   const [allProject, setAllProject] = useState([]);
@@ -15,7 +16,7 @@ const ProjectList = () => {
 
   const registerProject = async() => {
     try{
-      let res = await axios.post(`https://tech-prime-lab-9ov4.onrender.com/project/all-project?page=${page}&limit=8&sort=${sort}&searchTerm=${search}`);
+      let res = await axios.get(`http://localhost:8080/project/all-project?page=${page}&limit=5&sort=${sort}&searchTerm=${search}`);
       setAllProject(res.data);
     }catch(err){
       console.log(err)
@@ -30,15 +31,7 @@ const ProjectList = () => {
     <div className='d-flex dashboard'>
       <Sidebar />
       <div className='dashboard-main'>
-        <div className='d-flex align-items-center p-4' style={{color: "white"}}>
-          <div className='d-flex align-items-center' style={{width: "50%"}}>
-            <span class={`fa fa-fw fa-chevron-left field-icon`} style={{cursor: "pointer"}}></span>
-            <h4 style={{margin: 0, paddingLeft: '15px', fontSize: "25px"}}>Project Listing</h4>
-          </div>
-          <div style={{width: "50%"}}>
-           <img src={logo} alt='' />
-          </div>
-        </div>
+        <PageHeading heading={"Project Listing"} iconImg={<span class={"fa fa-fw fa-chevron-left field-icon"} style={{cursor: "pointer"}}></span>} icon={true}/>
         <div style={{paddingLeft: "25px", paddingRight: "25px"}}>
           <div class="shadow-lg bg-white rounded-2 pb-3">
             <div className='d-flex justify-content-between'>

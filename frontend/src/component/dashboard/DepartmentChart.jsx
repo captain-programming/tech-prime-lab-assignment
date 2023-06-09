@@ -1,16 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
+import axios from 'axios';
 
 const DepartmentChart = () => {
-  const departments = ['Strategy', 'Finance', 'Marketing', 'Operations', 'Strategy', 'Finance'];
-  const totalRegistered = [19, 7, 9, 15, 5, 10];
-  const totalClosed = [14, 6, 8, 15, 5, 9];
+  const [departmentData, setDepartmentData] = useState({});
 
-  const successPercentage = departments.map((department, index) => ({
-    name: department,
-    y: (totalClosed[index] / totalRegistered[index]) * 100,
-  }));
+  const getDepartmentWiseData = async() => {
+    try{
+      let res = await axios.get(`http://localhost:8080/project/department-data`);
+      setDepartmentData(res.data);
+    }catch(err){
+      console.log(err)
+    }
+  }
+
+  const successPercentage =
+    departmentData.departments &&
+    departmentData.totalClosed &&
+    departmentData.totalRegistered &&
+    departmentData.departments.map((department, index) => ({
+      name: department,
+      y: (departmentData.totalClosed[index] / departmentData.totalRegistered[index]) * 100,
+    }));
 
   const chartOptions = {
     chart: {
@@ -21,7 +33,7 @@ const DepartmentChart = () => {
       text: '',
     },
     xAxis: {
-      categories: departments,
+      categories: departmentData?.departments,
       labels: {
         formatter: function () {
           const index = this.pos;
@@ -58,7 +70,7 @@ const DepartmentChart = () => {
     series: [
       {
         name: 'Total',
-        data: totalRegistered,
+        data: departmentData?.totalRegistered,
         color: 'blue',
         dataLabels: {
           enabled: true,
@@ -70,7 +82,7 @@ const DepartmentChart = () => {
       },
       {
         name: 'Closed',
-        data: totalClosed,
+        data: departmentData?.totalClosed,
         color: 'green',
         dataLabels: {
           enabled: true,
@@ -83,11 +95,27 @@ const DepartmentChart = () => {
     ],
   };
 
+  useEffect(()=>{
+    getDepartmentWiseData();
+  }, []);
+
+  console.log(departmentData);
+
   return (
-    <div style={{width: "730px"}}>
-      <div class="shadow p-3 mb-5 bg-white rounded-3">
-        <HighchartsReact highcharts={Highcharts} options={chartOptions} />
+    <div style={{width: "600px"}}>
+      <div style={{ width: '600px' }}>
+      <div className="shadow p-3 mb-5 bg-white rounded-3">
+        {successPercentage ? (
+          <HighchartsReact
+            highcharts={Highcharts}
+            options={chartOptions}
+            containerProps={{ style: { height: '400px' } }}
+          />
+        ) : (
+          <div>Loading chart...</div>
+        )}
       </div>
+    </div>
     </div>
   );
 };

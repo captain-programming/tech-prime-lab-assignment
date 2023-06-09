@@ -4,6 +4,7 @@ import logo from "../../assets/Logo.svg";
 import "./createProject.css"
 import axios from "axios";
 import { toast } from 'react-toastify';
+import PageHeading from '../helping/PageHeading';
 
 const CreateProject = () => {
   const [createProject, setCreateProject] = useState({category: "Quality A", department: "Strategy", division: "Compressor", location: "Pune", priority: "High", reason: "Business", type: "Internal"});
@@ -15,7 +16,7 @@ const CreateProject = () => {
 
   const registerProject = async(data) => {
     try{
-      let res = await axios.post(`https://tech-prime-lab-9ov4.onrender.com/project/create`, data);
+      let res = await axios.post(`http://localhost:8080/project/create`, data);
       toast.success(res?.data?.message || 'New project added successfully', {
         position: toast.POSITION.BOTTOM_CENTER,
         autoClose: 3000,
@@ -75,96 +76,88 @@ const CreateProject = () => {
     <div className='d-flex dashboard'>  
       <Sidebar />
       <div className='dashboard-main'>
-        <div className='d-flex align-items-center p-4' style={{color: "white"}}>
-          <div className='d-flex align-items-center' style={{width: "50%"}}>
-            <span class={`fa fa-fw fa-chevron-left field-icon`} style={{cursor: "pointer"}}></span>
-            <h4 style={{margin: 0, paddingLeft: '15px', fontSize: "25px"}}>Project Listing</h4>
-          </div>
-          <div style={{width: "50%"}}>
-           <img src={logo} alt='' />
-          </div>
-        </div>
+        <PageHeading heading={"Create Project"} iconImg={<span class={"fa fa-fw fa-chevron-left field-icon"} style={{cursor: "pointer"}}></span>} icon={true}/>
         <div style={{paddingLeft: "25px", paddingRight: "25px", height: "85%"}}>
           <div className="shadow-lg bg-white rounded-2 pb-4" style={{height: "100%"}}>
             <form onSubmit={handleSunmit}>
-            <div className='d-flex justify-content-between p-4 align-items-start'>
-              <input type='text' placeholder='Enter Project Theme' className='rounded-3 p-3' style={{width: "60%", minHeight: "100px", textAlign: "start"}} onChange={handleOnchange} name='projectName' required/>
-              <button style={{backgroundColor: "rgb(2,91,170)", color: "white", padding: "6px 30px", borderRadius: "25px", fontWeight: "500", border: "1px solid #025BAA", fontSize: "20px"}} type='submit'>Save Project</button>
-            </div>
-            <div className='form-option p-4'>
-              <div>
-                <p style={{ margin: 0, padding: 0, fontSize: "18px"}}>Reason:</p> 
-                  <select style={{borderRadius: "10px", padding: "16px", width: "100%"}} onChange={handleOnchange} name='reason' required defaultValue={'Business'}>
-                    <option value="Business">Business</option>
-                    <option value="DealerShip">DealerShip</option>
-                    <option value="Transport">Transport</option>
-                  </select>
+              <div className='d-flex justify-content-between p-4 align-items-start'>
+                <input type='text' placeholder='Enter Project Theme' className='rounded-3 p-3' style={{width: "60%", minHeight: "80px", textAlign: "start"}} onChange={handleOnchange} name='projectName' required/>
+                <button style={{backgroundColor: "rgb(2,91,170)", color: "white", padding: "6px 30px", borderRadius: "25px", fontWeight: "500", border: "1px solid #025BAA", fontSize: "17px"}} type='submit'>Save Project</button>
               </div>
-              <div>
-                <p style={{ margin: 0, padding: 0, fontSize: "18px"}}>Type:</p> 
-                  <select style={{borderRadius: "10px", padding: "16px", width: "100%"}} onChange={handleOnchange} name='type' required defaultValue={'Internal'}>
-                    <option value="Internal">Internal</option>
-                    <option value="External">External</option>
-                    <option value="Vendor">Vendor</option>
-                  </select>
+              <div className='form-option p-4'>
+                <div>
+                  <p style={{ margin: 0, padding: 0, fontSize: "14px", color: "gray"}}>Reason:</p> 
+                    <select style={{borderRadius: "10px", padding: "11px", width: "100%"}} onChange={handleOnchange} name='reason' required defaultValue={'Business'}>
+                      <option value="Business">Business</option>
+                      <option value="DealerShip">DealerShip</option>
+                      <option value="Transport">Transport</option>
+                    </select>
+                </div>
+                <div>
+                  <p style={{ margin: 0, padding: 0, fontSize: "14px", color: "gray"}}>Type:</p> 
+                    <select style={{borderRadius: "10px", padding: "11px", width: "100%"}} onChange={handleOnchange} name='type' required defaultValue={'Internal'}>
+                      <option value="Internal">Internal</option>
+                      <option value="External">External</option>
+                      <option value="Vendor">Vendor</option>
+                    </select>
+                </div>
+                <div>
+                  <p style={{ margin: 0, padding: 0, fontSize: "14px", color: "gray"}}>Division:</p> 
+                    <select style={{borderRadius: "10px", padding: "11px", width: "100%"}} onChange={handleOnchange} name='division' required defaultValue={'Compressor'}>
+                      <option value="Compressor">Compressor</option>
+                      <option value="Filters">Filters</option>
+                      <option value="Pumps">Pumps</option>
+                      <option value="Glass">Glass</option>
+                      <option value="Water Heater">Water Heater</option>
+                    </select>
+                </div>
+                <div>
+                  <p style={{ margin: 0, padding: 0, fontSize: "14px", color: "gray"}}>Category:</p> 
+                    <select style={{borderRadius: "10px", padding: "11px", width: "100%"}} onChange={handleOnchange} name='category' required defaultValue={'Quality A'}>
+                      <option value="Quality A">Quality A</option>
+                      <option value="Quality B">Quality B</option>
+                      <option value="Quality C">Quality C</option>
+                      <option value="Quality D">Quality D</option>
+                    </select>
+                </div>
+                <div>
+                  <p style={{ margin: 0, padding: 0, fontSize: "14px", color: "gray"}}>Priority:</p> 
+                    <select style={{borderRadius: "10px", padding: "11px", width: "100%"}} onChange={handleOnchange} name='priority' required defaultValue={'High'}>
+                      <option value="High">High</option>
+                      <option value="Low">Low</option>
+                      <option value="Medium">Medium</option>
+                    </select>
+                </div>
+                <div>
+                  <p style={{ margin: 0, padding: 0, fontSize: "14px", color: "gray"}}>Department:</p> 
+                    <select style={{borderRadius: "10px", padding: "11px", width: "100%"}} onChange={handleOnchange} name='department' required defaultValue={'Strategy'}>
+                      <option value="Strategy">Strategy</option>
+                      <option value="Finance">Finance</option>
+                      <option value="Quality">Quality</option>
+                      <option value="Maintenance">Maintenance</option>
+                      <option value="Stores">Stores</option>
+                    </select>
+                </div>
+                <div>
+                  <p style={{ margin: 0, padding: 0, fontSize: "14px", color: "gray"}}>Start Dates as per Project Plan:</p> 
+                  <input type='date' placeholder='D Month, Yr' style={{borderRadius: "10px", padding: "11px", width: "100%"}} onChange={handleOnchange} name='startDate' required min={minDateFun()}/>
+                </div>
+                <div>
+                  <p style={{ margin: 0, padding: 0, fontSize: "14px", color: "gray"}}>End Dates as per Project Plan:</p> 
+                  <input type='date' placeholder='D Month, Yr' style={{borderRadius: "10px", padding: "11px", width: "100%"}} onChange={handleOnchange} name='endDate' required min={minDateEnd(createProject.startDate)}/>
+                </div>
+                <div>
+                  <p style={{ margin: 0, padding: 0, fontSize: "14px", color: "gray"}}>Location:</p> 
+                    <select style={{borderRadius: "10px", padding: "11px", width: "100%"}} onChange={handleOnchange} name='location' required defaultValue={'Pune'}>
+                      <option value="Pune">Pune</option>
+                      <option value="Delhi">Delhi</option>
+                      <option value="Mumbai">Mumbai</option>
+                    </select>
+                </div>
               </div>
-              <div>
-                <p style={{ margin: 0, padding: 0, fontSize: "18px"}}>Division:</p> 
-                  <select style={{borderRadius: "10px", padding: "16px", width: "100%"}} onChange={handleOnchange} name='division' required defaultValue={'Compressor'}>
-                    <option value="Compressor">Compressor</option>
-                    <option value="Filters">Filters</option>
-                    <option value="Pumps">Pumps</option>
-                    <option value="Glass">Glass</option>
-                    <option value="Water Heater">Water Heater</option>
-                  </select>
+              <div className='d-flex justify-content-end' style={{width: "90%", margin: "auto"}}>
+                <p style={{width: "37%", fontSize: "16px", color: "gray"}}>Status: <b>Registered</b></p>
               </div>
-              <div>
-                <p style={{ margin: 0, padding: 0, fontSize: "18px"}}>Category:</p> 
-                  <select style={{borderRadius: "10px", padding: "16px", width: "100%"}} onChange={handleOnchange} name='category' required defaultValue={'Quality A'}>
-                    <option value="Quality A">Quality A</option>
-                    <option value="Quality B">Quality B</option>
-                    <option value="Quality C">Quality C</option>
-                    <option value="Quality D">Quality D</option>
-                  </select>
-              </div>
-              <div>
-                <p style={{ margin: 0, padding: 0, fontSize: "18px"}}>Priority:</p> 
-                  <select style={{borderRadius: "10px", padding: "16px", width: "100%"}} onChange={handleOnchange} name='priority' required defaultValue={'High'}>
-                    <option value="High">High</option>
-                    <option value="Low">Low</option>
-                    <option value="Medium">Medium</option>
-                  </select>
-              </div>
-              <div>
-                <p style={{ margin: 0, padding: 0, fontSize: "18px"}}>Department:</p> 
-                  <select style={{borderRadius: "10px", padding: "16px", width: "100%"}} onChange={handleOnchange} name='department' required defaultValue={'Strategy'}>
-                    <option value="Strategy">Strategy</option>
-                    <option value="Finance">Finance</option>
-                    <option value="Quality">Quality</option>
-                    <option value="Maintenance">Maintenance</option>
-                    <option value="Stores">Stores</option>
-                  </select>
-              </div>
-              <div>
-                <p style={{ margin: 0, padding: 0, fontSize: "18px"}}>Start Dates as per Project Plan:</p> 
-                <input type='date' placeholder='D Month, Yr' style={{borderRadius: "10px", padding: "16px", width: "100%"}} onChange={handleOnchange} name='startDate' required min={minDateFun()}/>
-              </div>
-              <div>
-                <p style={{ margin: 0, padding: 0, fontSize: "18px"}}>End Dates as per Project Plan:</p> 
-                <input type='date' placeholder='D Month, Yr' style={{borderRadius: "10px", padding: "16px", width: "100%"}} onChange={handleOnchange} name='endDate' required min={minDateEnd(createProject.startDate)}/>
-              </div>
-              <div>
-                <p style={{ margin: 0, padding: 0, fontSize: "18px"}}>Location:</p> 
-                  <select style={{borderRadius: "10px", padding: "16px", width: "100%"}} onChange={handleOnchange} name='location' required defaultValue={'Pune'}>
-                    <option value="Pune">Pune</option>
-                    <option value="Delhi">Delhi</option>
-                    <option value="Mumbai">Mumbai</option>
-                  </select>
-              </div>
-            </div>
-            <div className='d-flex justify-content-end' style={{width: "90%", margin: "auto"}}>
-              <p style={{width: "37%", fontSize: "20px"}}>Status: <b>Registered</b></p>
-            </div>
             </form>
           </div>
         </div>

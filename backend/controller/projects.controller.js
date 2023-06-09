@@ -1,5 +1,31 @@
 const ProjectModel = require("../models/project.model");
 
+function performOperation(data) {
+  const result = {
+    departments: [],
+    totalRegistered: [],
+    totalClosed: []
+  };
+
+  for (let i = 0; i < data.length; i++) {
+    const obj = data[i];
+    const departmentName = obj.department;
+
+    const index = result.departments.indexOf(departmentName);
+    if (index === -1) {
+      result.departments.push(departmentName);
+      result.totalRegistered.push(1);
+      result.totalClosed.push(obj.status === 'Closed' ? 1 : 0);
+    } else {
+      result.totalRegistered[index]++;
+      result.totalClosed[index] += obj.status === 'Closed' ? 1 : 0;
+    }
+  }
+
+  return result;
+}
+
+
 const projectCreate = async(req, res) => {
   const { category, department, division,endDate, location, priority, reason, startDate, status, type, projectName} = req.body;
 
@@ -12,6 +38,17 @@ const projectCreate = async(req, res) => {
     res.status(500).json({ message: 'Internal Server Error' });
   }
 }
+
+const projectDepartmentWiseData = async (req, res) => {
+  try {
+    const data = await ProjectModel.find({});
+
+    res.json(performOperation(data));
+  } catch (err) {
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
 
 const projectUpdate = async (req, res) => {
   const { status } = req.body;
@@ -138,4 +175,4 @@ const getCount = async (req, res) => {
 }
 
 
-module.exports = {projectCreate, allProject, getCount, projectUpdate};
+module.exports = {projectCreate, allProject, getCount, projectUpdate, projectDepartmentWiseData};

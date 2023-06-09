@@ -54,21 +54,21 @@ const Login = () => {
 
   return (
     <div className="login-main d-flex align-items-center flex-column">
-      <div style={{paddingTop: "85px"}}>
-        <img src={logo} width={"110px"} alt=''/>
+      <div style={{paddingTop: "70px"}}>
+        <img src={logo} width={"85px"} alt=''/>
       </div>
       <p>Online Project Management</p>
-      <div className="card border border-0 shadow-lg p-3 mb-5 bg-body-tertiary rounded-4" style={{width: "500px", minHeight: "300px"}}>
-        <p className='text-center fw-medium fs-4 mt-5' style={{color: "#3F3F3F"}}>Login to get started</p>
-        <form className='p-5 fs-5 form' onSubmit={handleSubmit}>
+      <div className="card border border-0 shadow-lg p-3 mb-5 bg-body-tertiary rounded-4" style={{width: "410px"}}>
+        <p className='text-center fs-5' style={{color: "#3F3F3F", marginTop: "30px"}}>Login to get started</p>
+        <form className='p-4 fs-6 form' onSubmit={handleSubmit}>
           <div className="form-group">
             <label className="form-control-placeholder" htmlFor="email">Email</label>
-            <input type="email" className="form-control p-3" name='email' required onChange={handleOnChange} onClick={checkPrevLogin} value={formData?.email}/>  
+            <input type="email" className="form-control" name='email' required onChange={handleOnChange} onClick={checkPrevLogin} value={formData?.email} style={{padding: "11px"}}/>  
           </div>
           <div className="form-group mt-4">
             <label className="form-control-placeholder" htmlFor="password">Password</label>
             <div className="input-group align-items-center">
-              <input type={showPassword ? 'text' : 'password'} className="form-control p-3" required onChange={handleOnChange} name='password' value={formData?.password}/>  
+              <input type={showPassword ? 'text' : 'password'} className="form-control" required onChange={handleOnChange} name='password' value={formData?.password} style={{padding: "11px"}}/>  
               <span toggle="#password-field" className={`fa fa-fw ${showPassword ? 'fa-eye' : 'fa-eye-slash'} field-icon`} onClick={togglePasswordVisibility}></span>
             </div>  
           </div>

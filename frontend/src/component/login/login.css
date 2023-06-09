@@ -3,15 +3,15 @@
   width: 100%;
   min-height: 1000px;
   background-image: url('../../assets/login-bg-1.svg');
-  background-size: auto 592px;
+  background-size: auto 49%;
   background-repeat: repeat-x;
-  background-position: -20px 0;
+  background-position: -30px 0;
 }
 
 .login-main > p{
   color: white;
-  font-size: 20px;
-  margin: 30px;
+  font-size: 16px;
+  margin: 20px 0px 25px 20px;
 }
 
 .form-group .field-icon{
@@ -22,13 +22,13 @@
 .form .forgot-password{
   cursor: pointer;
   color: #4C8AC4;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 500;
-  margin-top: 2px;
+  margin-top: 5px;
 }
 
 .login-btn{
-  padding: 7px 80px;
+  padding: 7px 60px;
   background-color: #035EB3;
   color: white;
   border: none;

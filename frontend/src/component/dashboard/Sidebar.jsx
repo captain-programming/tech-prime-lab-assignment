@@ -15,15 +15,15 @@ const Sidebar = () => {
   const {handleLogout} = useContext(AuthContext);
 
   return (
-    <div className="shadow-lg sidebar d-flex flex-column justify-content-between pt-5 pb-5">
-        <div className="d-flex flex-column align-items-center justify-content-center flex-grow-1 gap-5">
+    <div className=" sidebar d-flex flex-column justify-content-center">
+        <div className="d-flex flex-column align-items-center justify-content-center flex-grow-1 gap-4">
           <div className='d-flex justify-content-between' style={{width: "100%"}}>
             {pathname==="/" && 
               <p style={{backgroundColor: "#035BAB", height: "100%", width: "6px"}} className="rounded-end"></p> 
             }
-            <div className='d-flex flex-grow-1 align-items-center justify-content-center pt-2 pb-2'>
+            <div className='d-flex flex-grow-1 align-items-center justify-content-center pt-1 pb-1'>
               <NavLink to={"/"}>
-                <img src={pathname==="/" ? dashboardActive : dashboard} alt='Dashboard' width={"30px"} style={{cursor: "pointer"}}/>
+                <img src={pathname==="/" ? dashboardActive : dashboard} alt='Dashboard' width={"25px"} style={{cursor: "pointer"}}/>
               </NavLink>
             </div>
           </div>
@@ -31,9 +31,9 @@ const Sidebar = () => {
             {pathname==="/project-list" &&
               <p style={{backgroundColor: "#035BAB", height: "100%", width: "6px"}} className="rounded-end"></p>
             }
-            <div className='d-flex flex-grow-1 align-items-center justify-content-center pt-2 pb-2'>
+            <div className='d-flex flex-grow-1 align-items-center justify-content-center pt-1 pb-1'>
               <NavLink to={"/project-list"}>
-                <img src={pathname==="/project-list" ? projectListActive : projectList} alt='Project List' width={"30px"} style={{cursor: "pointer"}}/>
+                <img src={pathname==="/project-list" ? projectListActive : projectList} alt='Project List' width={"25px"} style={{cursor: "pointer"}}/>
               </NavLink>
             </div>
           </div>
@@ -42,14 +42,14 @@ const Sidebar = () => {
             {pathname==="/create-project" &&
               <p style={{backgroundColor: "#035BAB", height: "100%", width: "6px"}} className="rounded-end"></p>
             }
-            <div className='d-flex flex-grow-1 align-items-center justify-content-center pt-2 pb-2'>
+            <div className='d-flex flex-grow-1 align-items-center justify-content-center pt-1 pb-1'>
               <NavLink to={"/create-project"}>
-                <img src={pathname==="/create-project" ? createProjectActive : createProject} alt='Create Project' width={"30px"} style={{cursor: "pointer"}}/>
+                <img src={pathname==="/create-project" ? createProjectActive : createProject} alt='Create Project' width={"25 px"} style={{cursor: "pointer"}}/>
               </NavLink>
             </div>
           </div>
         </div>
-        <div className="d-flex flex-column align-items-center justify-content-end">
+        <div className="d-flex flex-column align-items-center justify-content-end mb-4">
           <img src={logout} alt='Logout' style={{cursor: "pointer"}} onClick={handleLogout}/>
         </div>
       </div>
