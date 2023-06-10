@@ -1,10 +1,11 @@
 # Test accounts login credentials
 
-1. 
+1. Test account 1
 - email: kiran.gosavi@techprimelab.com
 - password: mypass321
 
-2. 
+
+2. Test account 1
 - email: test@gmail.com
 - password: test@123
 
