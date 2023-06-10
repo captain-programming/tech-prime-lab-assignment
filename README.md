@@ -1,10 +1,12 @@
-# Login credentials
+# Test accounts login credentials
 
-email: kiran.gosavi@techprimelab.com
-password: mypass321
+1. 
+- email: kiran.gosavi@techprimelab.com
+- password: mypass321
 
-email: test@gmail.com
-password: test@123
+2. 
+- email: test@gmail.com
+- password: test@123
 
 # how to run project
 
