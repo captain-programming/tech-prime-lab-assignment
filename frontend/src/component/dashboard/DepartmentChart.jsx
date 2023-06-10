@@ -8,7 +8,7 @@ const DepartmentChart = () => {
 
   const getDepartmentWiseData = async() => {
     try{
-      let res = await axios.get(`http://localhost:8080/project/department-data`);
+      let res = await axios.get(`https://tech-prime-lab-9ov4.onrender.com/project/department-data`);
       setDepartmentData(res.data);
     }catch(err){
       console.log(err)

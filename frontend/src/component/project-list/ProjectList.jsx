@@ -16,7 +16,7 @@ const ProjectList = () => {
 
   const registerProject = async() => {
     try{
-      let res = await axios.get(`http://localhost:8080/project/all-project?page=${page}&limit=5&sort=${sort}&searchTerm=${search}`);
+      let res = await axios.get(`https://tech-prime-lab-9ov4.onrender.com/project/all-project?page=${page}&limit=5&sort=${sort}&searchTerm=${search}`);
       setAllProject(res.data);
     }catch(err){
       console.log(err)
