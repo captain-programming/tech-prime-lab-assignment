@@ -4,8 +4,9 @@ import { AuthContext } from './AuthContext';
 
 const PrivateRoute = ({children}) => {
   const {isAuth} = useContext(AuthContext);
+  const loginData = localStorage.getItem("primelab") || "";
 
-  if(isAuth){
+  if(loginData || isAuth){
     return children
   }
 

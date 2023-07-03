@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 const ProjectTable = ({allProject, setEditWork}) => {
   const editProject = async(text, id) => {
     try{
-      let res = await axios.patch(`https://tech-prime-lab-9ov4.onrender.com/project/update/${id}`, {status: text});
+      let res = await axios.patch(`http://localhost:8080/project/update/${id}`, {status: text});
       toast.success(res?.data?.message || 'Valid User', {
         position: toast.POSITION.BOTTOM_CENTER,
         autoClose: 3000,

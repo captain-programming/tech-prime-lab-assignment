@@ -1,0 +1,48 @@
+.page-heading{
+  color: white;
+}
+
+.page-heading .heading-logo{
+  width: 50%;
+}
+
+.page-heading .heading-logo h4{
+  margin: 0; 
+  padding-left: 10px;
+  width: 50%;
+  font-size: 20px;
+}
+
+.page-heading .imglogo-heading{
+  width: 50%;
+}
+.page-heading .imglogo-heading img{
+  width: 50px;
+}
+
+.page-heading .logout-heading{
+  cursor: pointer;
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .page-heading{
+    display: flex;
+    justify-content: space-between;
+  }
+  .page-heading .heading-logo{
+    width: 80%;
+  }
+
+  .page-heading .heading-logo h4{
+    font-size: 15px;
+  }
+  
+  .page-heading .imglogo-heading{
+    display: none;
+  }
+
+  .page-heading .logout-heading{
+    display: block;
+  }
+}

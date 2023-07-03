@@ -7,7 +7,7 @@ function performOperation(data) {
     totalClosed: []
   };
 
-  for (let i = 0; i < data.length; i++) {
+  for (let i = 0; i < data.length; i++){
     const obj = data[i];
     const departmentName = obj.department;
 
@@ -41,9 +41,24 @@ const projectCreate = async(req, res) => {
 
 const projectDepartmentWiseData = async (req, res) => {
   try {
-    const data = await ProjectModel.find({});
-
-    res.json(performOperation(data));
+    const data = await ProjectModel.aggregate([
+      {
+        $group: {
+          _id: "$department",
+          totalRegistered: { $sum: 1 },
+          totalClosed: { $sum: { $cond: [{ $eq: ['$status', 'Closed'] }, 1, 0] } }
+        }
+      },
+      {
+        $group: {
+          _id: null,
+          departments: { $push: "$_id" },
+          totalRegistered: { $push: "$totalRegistered" },
+          totalClosed: { $push: "$totalClosed" }
+        }
+      }
+    ]);
+    res.json(data[0]);
   } catch (err) {
     res.status(500).json({ message: 'Internal Server Error' });
   }

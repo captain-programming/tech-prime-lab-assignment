@@ -8,7 +8,7 @@ const DepartmentChart = () => {
 
   const getDepartmentWiseData = async() => {
     try{
-      let res = await axios.get(`https://tech-prime-lab-9ov4.onrender.com/project/department-data`);
+      let res = await axios.get(`http://localhost:8080/project/department-data`);
       setDepartmentData(res.data);
     }catch(err){
       console.log(err)
@@ -63,8 +63,7 @@ const DepartmentChart = () => {
       {
         title: {
           text: '',
-        },
-        opposite: true,
+        }
       },
     ],
     series: [
@@ -102,8 +101,7 @@ const DepartmentChart = () => {
   console.log(departmentData);
 
   return (
-    <div style={{width: "600px"}}>
-      <div style={{ width: '600px' }}>
+    <div className='chart-div'>
       <div className="shadow p-3 mb-5 bg-white rounded-3">
         {successPercentage ? (
           <HighchartsReact
@@ -115,7 +113,6 @@ const DepartmentChart = () => {
           <div>Loading chart...</div>
         )}
       </div>
-    </div>
     </div>
   );
 };

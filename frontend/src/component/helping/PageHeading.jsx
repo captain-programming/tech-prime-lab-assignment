@@ -1,19 +1,27 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import logo from "../../assets/Logo.svg";
+import { AuthContext } from '../AuthContext';
+import logout from "../../assets/Logout.svg";
+import "./PageHeading.css";
 
 const PageHeading = ({icon=false, heading, iconImg}) => {
+  const {handleLogout} = useContext(AuthContext);
   return (
     <>
-    <div className='d-flex align-items-center p-4' style={{color: "white"}}>
-      <div className='d-flex align-items-center' style={{width: "50%"}}>
+    <div className='d-flex align-items-center p-4 page-heading'>
+      <div className='d-flex align-items-center heading-logo'>
         {icon && iconImg}
-        <h4 style={{margin: 0, paddingLeft: '10px', width: "50%", fontSize: "20px"}}>
+        <h4>
         {heading}
         </h4>
       </div>
-      <div style={{width: "50%"}}>
-        <img src={logo} alt='' width={"60px"}/>
+      <div className='imglogo-heading'>
+        <img src={logo} alt=''/>
       </div>
+      <div className='logout-heading'>
+        <img src={logout} alt='Logout' onClick={handleLogout}/>
+      </div>
+
     </div>
   </>
   )

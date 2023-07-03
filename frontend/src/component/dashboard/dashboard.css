@@ -13,3 +13,60 @@
   background-repeat: no-repeat;
   background-color: #F2F4F7;
 }
+
+.dashboard-main .status-board{
+  padding: 0px 25px;
+}
+
+.status-board .status-card{
+  border-left: 5px solid #0DC8E8;
+  width: 100%;
+}
+
+.status-board .status-card p{
+  font-weight: 500;
+  color: gray;
+}
+
+.status-board .status-card h2{
+  margin:-15px 0px -10px 0px;
+  padding: 0; 
+  font-size: 35px;
+}
+
+.dashboard-main .chart{
+  padding: 0px 25px;
+}
+
+.chart .chart-div{
+  width: 600px;
+}
+
+@media (max-width: 768px) {
+  .dashboard{
+    flex-direction: column-reverse;
+    min-height: 0;
+  }
+
+  .dashboard .dashboard-main {
+    background-image: url(../../assets/Header-bg.svg);
+    background-size: auto 70px;
+    background-repeat: no-repeat;
+    background-color: #F2F4F7;
+  }
+
+  .dashboard-main .status-board{
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    margin-top: 20px;
+  }
+
+  .chart .chart-div{
+    width: 95%;
+    margin: auto;
+  }
+
+  .status-board .status-card p{
+    width: 120px
+  }
+}

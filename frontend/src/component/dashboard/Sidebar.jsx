@@ -6,17 +6,23 @@ import dashboard from "../../assets/Dashboard.svg";
 import logout from "../../assets/Logout.svg";
 import projectList from "../../assets/Project-list.svg";
 import projectListActive from "../../assets/Project-list-active.svg";
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import "../dashboard/sidebar.css";
 import { AuthContext } from '../AuthContext';
 
 const Sidebar = () => {
   const {pathname} = useLocation();
   const {handleLogout} = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogoutFun = () => {
+    handleLogout();
+    navigate("/");
+  }
 
   return (
-    <div className=" sidebar d-flex flex-column justify-content-center">
-        <div className="d-flex flex-column align-items-center justify-content-center flex-grow-1 gap-4">
+    <div className=" sidebar">
+        <div className="first-section">
           <div className='d-flex justify-content-between' style={{width: "100%"}}>
             {pathname==="/" && 
               <p style={{backgroundColor: "#035BAB", height: "100%", width: "6px"}} className="rounded-end"></p> 
@@ -37,7 +43,7 @@ const Sidebar = () => {
               </NavLink>
             </div>
           </div>
-          <p style={{border: "2px solid #E1E0E1", width: "40px"}}></p>
+          <p className='dot-line'></p>
           <div className='d-flex justify-content-between' style={{width: "100%"}}>
             {pathname==="/create-project" &&
               <p style={{backgroundColor: "#035BAB", height: "100%", width: "6px"}} className="rounded-end"></p>
@@ -49,8 +55,8 @@ const Sidebar = () => {
             </div>
           </div>
         </div>
-        <div className="d-flex flex-column align-items-center justify-content-end mb-4">
-          <img src={logout} alt='Logout' style={{cursor: "pointer"}} onClick={handleLogout}/>
+        <div className="logout">
+          <img src={logout} alt='Logout' style={{cursor: "pointer"}} onClick={handleLogoutFun}/>
         </div>
       </div>
   )

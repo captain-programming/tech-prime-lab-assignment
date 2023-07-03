@@ -7,16 +7,40 @@ import { toast } from 'react-toastify';
 import PageHeading from '../helping/PageHeading';
 
 const CreateProject = () => {
-  const [createProject, setCreateProject] = useState({category: "Quality A", department: "Strategy", division: "Compressor", location: "Pune", priority: "High", reason: "Business", type: "Internal"});
+  const [createProject, setCreateProject] = useState({category: "Quality A", department: "Strategy", division: "Compressor", location: "Pune", priority: "High", reason: "Business", type: "Internal", endDate: '', startDate: '', projectName: ""});
+  const [error, setError] = useState({projectName: "", startDate: "", endDate: ""});
 
   const handleOnchange = (e) => {
     const {name, value} = e.target;
-    setCreateProject({...createProject, [name]: value});
+    if(name==="startDate" && createProject.endDate !== ''){
+      setCreateProject({...createProject, startDate: value, endDate: ''});
+    }else{
+      setCreateProject({...createProject, [name]: value});
+    }
+    
   }
+
+  const checkValidation = (data) => {
+    let temp = { ...error };
+    if("projectName" in data){
+      temp.projectName = data.projectName === "" ? "Project Theme reuired" : ""
+    }
+    if ("startDate" in data) {
+      temp.startDate = data.startDate === "" ? "Start date is required" : ""
+    }
+    if ("endDate" in data) {
+      temp.endDate = data.endDate === "" ? "End date is required" : ""
+    }
+
+    setError({...temp});
+    return Object.values(temp).every((x) => x === "");
+  }
+
+  console.log(error)
 
   const registerProject = async(data) => {
     try{
-      let res = await axios.post(`https://tech-prime-lab-9ov4.onrender.com/project/create`, data);
+      let res = await axios.post(`http://localhost:8080/project/create`, data);
       toast.success(res?.data?.message || 'New project added successfully', {
         position: toast.POSITION.BOTTOM_CENTER,
         autoClose: 3000,
@@ -69,7 +93,10 @@ const CreateProject = () => {
 
   const handleSunmit = (e) => {
     e.preventDefault();
-    registerProject({...createProject, status: "Registered"});
+    if(checkValidation(createProject)){
+      registerProject({...createProject, status: "Registered"});
+    }
+    // console.log(createProject)
   }
 
   return (
@@ -81,29 +108,32 @@ const CreateProject = () => {
           <div className="shadow-lg bg-white rounded-2 pb-4" style={{height: "100%"}}>
             <form onSubmit={handleSunmit}>
               <div className='d-flex justify-content-between p-4 align-items-start'>
-                <input type='text' placeholder='Enter Project Theme' className='rounded-3 p-3' style={{width: "60%", minHeight: "80px", textAlign: "start"}} onChange={handleOnchange} name='projectName' required/>
-                <button style={{backgroundColor: "rgb(2,91,170)", color: "white", padding: "6px 30px", borderRadius: "25px", fontWeight: "500", border: "1px solid #025BAA", fontSize: "17px"}} type='submit'>Save Project</button>
+                <div className='w-100'>
+                  <input type='text' placeholder='Enter Project Theme' className='title-input' onChange={handleOnchange} name='projectName' style={{borderColor: error.projectName ? "red" : "", border: "1px solid gray"}}/>
+                  {error.projectName && <p style={{color: "red", fontSize: "15px"}}>{error.projectName}</p>}
+                </div>
+                <button className='submit-form-btn' type='submit'>Save Project</button>
               </div>
               <div className='form-option p-4'>
-                <div>
-                  <p style={{ margin: 0, padding: 0, fontSize: "14px", color: "gray"}}>Reason:</p> 
-                    <select style={{borderRadius: "10px", padding: "11px", width: "100%"}} onChange={handleOnchange} name='reason' required defaultValue={'Business'}>
+                <div className='single-form-option'>
+                  <p className='form-option-title'>Reason:</p> 
+                    <select onChange={handleOnchange} name='reason' required defaultValue={'Business'}>
                       <option value="Business">Business</option>
                       <option value="DealerShip">DealerShip</option>
                       <option value="Transport">Transport</option>
                     </select>
                 </div>
-                <div>
-                  <p style={{ margin: 0, padding: 0, fontSize: "14px", color: "gray"}}>Type:</p> 
-                    <select style={{borderRadius: "10px", padding: "11px", width: "100%"}} onChange={handleOnchange} name='type' required defaultValue={'Internal'}>
+                <div className='single-form-option'>
+                  <p className='form-option-title'>Type:</p> 
+                    <select onChange={handleOnchange} name='type' required defaultValue={'Internal'}>
                       <option value="Internal">Internal</option>
                       <option value="External">External</option>
                       <option value="Vendor">Vendor</option>
                     </select>
                 </div>
-                <div>
-                  <p style={{ margin: 0, padding: 0, fontSize: "14px", color: "gray"}}>Division:</p> 
-                    <select style={{borderRadius: "10px", padding: "11px", width: "100%"}} onChange={handleOnchange} name='division' required defaultValue={'Compressor'}>
+                <div className='single-form-option'>
+                  <p className='form-option-title'>Division:</p> 
+                    <select onChange={handleOnchange} name='division' required defaultValue={'Compressor'}>
                       <option value="Compressor">Compressor</option>
                       <option value="Filters">Filters</option>
                       <option value="Pumps">Pumps</option>
@@ -111,26 +141,26 @@ const CreateProject = () => {
                       <option value="Water Heater">Water Heater</option>
                     </select>
                 </div>
-                <div>
-                  <p style={{ margin: 0, padding: 0, fontSize: "14px", color: "gray"}}>Category:</p> 
-                    <select style={{borderRadius: "10px", padding: "11px", width: "100%"}} onChange={handleOnchange} name='category' required defaultValue={'Quality A'}>
+                <div className='single-form-option'>
+                  <p className='form-option-title'>Category:</p> 
+                    <select onChange={handleOnchange} name='category' required defaultValue={'Quality A'}>
                       <option value="Quality A">Quality A</option>
                       <option value="Quality B">Quality B</option>
                       <option value="Quality C">Quality C</option>
                       <option value="Quality D">Quality D</option>
                     </select>
                 </div>
-                <div>
-                  <p style={{ margin: 0, padding: 0, fontSize: "14px", color: "gray"}}>Priority:</p> 
-                    <select style={{borderRadius: "10px", padding: "11px", width: "100%"}} onChange={handleOnchange} name='priority' required defaultValue={'High'}>
+                <div className='single-form-option'>
+                  <p className='form-option-title'>Priority:</p> 
+                    <select onChange={handleOnchange} name='priority' required defaultValue={'High'}>
                       <option value="High">High</option>
                       <option value="Low">Low</option>
                       <option value="Medium">Medium</option>
                     </select>
                 </div>
-                <div>
-                  <p style={{ margin: 0, padding: 0, fontSize: "14px", color: "gray"}}>Department:</p> 
-                    <select style={{borderRadius: "10px", padding: "11px", width: "100%"}} onChange={handleOnchange} name='department' required defaultValue={'Strategy'}>
+                <div className='single-form-option'>
+                  <p className='form-option-title'>Department:</p> 
+                    <select onChange={handleOnchange} name='department' required defaultValue={'Strategy'}>
                       <option value="Strategy">Strategy</option>
                       <option value="Finance">Finance</option>
                       <option value="Quality">Quality</option>
@@ -138,26 +168,29 @@ const CreateProject = () => {
                       <option value="Stores">Stores</option>
                     </select>
                 </div>
-                <div>
-                  <p style={{ margin: 0, padding: 0, fontSize: "14px", color: "gray"}}>Start Dates as per Project Plan:</p> 
-                  <input type='date' placeholder='D Month, Yr' style={{borderRadius: "10px", padding: "11px", width: "100%"}} onChange={handleOnchange} name='startDate' required min={minDateFun()}/>
+                <div className='single-form-option'>
+                  <p className='form-option-title' style={{color: error.startDate ? "red" : ""}}>Start Dates as per Project Plan:</p> 
+                  <input type='date' placeholder='D Month, Yr' onChange={handleOnchange} name='startDate' min={minDateFun()} value={createProject.startDate} style={{border: error.startDate ? "1px solid red" :"1px solid gray"}}/>
+                  {error.startDate && <p style={{color: "red", fontSize: "15px"}}>{error.startDate}</p>}
                 </div>
-                <div>
-                  <p style={{ margin: 0, padding: 0, fontSize: "14px", color: "gray"}}>End Dates as per Project Plan:</p> 
-                  <input type='date' placeholder='D Month, Yr' style={{borderRadius: "10px", padding: "11px", width: "100%"}} onChange={handleOnchange} name='endDate' required min={minDateEnd(createProject.startDate)}/>
+                <div className='single-form-option'>
+                  <p className='form-option-title' style={{color: error.endDate ? "red" : ""}}>End Dates as per Project Plan:</p> 
+                  <input type='date' placeholder='D Month, Yr' onChange={handleOnchange} min={minDateEnd(createProject.startDate)} name='endDate' value={createProject.endDate} style={{border: error.endDate ? "1px solid red" :"1px solid gray"}}/>
+                  {error.endDate && <p style={{color: "red", fontSize: "15px"}}>{error.endDate}</p>}
                 </div>
-                <div>
-                  <p style={{ margin: 0, padding: 0, fontSize: "14px", color: "gray"}}>Location:</p> 
-                    <select style={{borderRadius: "10px", padding: "11px", width: "100%"}} onChange={handleOnchange} name='location' required defaultValue={'Pune'}>
+                <div className='single-form-option'>
+                  <p className='form-option-title'>Location:</p> 
+                    <select onChange={handleOnchange} name='location' required defaultValue={'Pune'}>
                       <option value="Pune">Pune</option>
                       <option value="Delhi">Delhi</option>
                       <option value="Mumbai">Mumbai</option>
                     </select>
                 </div>
               </div>
-              <div className='d-flex justify-content-end' style={{width: "90%", margin: "auto"}}>
-                <p style={{width: "37%", fontSize: "16px", color: "gray"}}>Status: <b>Registered</b></p>
+              <div className='d-flex justify-content-end status-option'>
+                <p>Status: <b>Registered</b></p>
               </div>
+              <button className='submit-form-btn-2' type='submit'>Save Project</button>
             </form>
           </div>
         </div>
